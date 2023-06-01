@@ -633,7 +633,7 @@ func main() {
 	var dataTransaksi arrTransaksi
 	var NBarang, NTransaksi int
 	inputDataBarang(&dataBarang, &NBarang)
-	// inputDataTransaksi(&dataTransaksi, &NTransaksi)
+	inputDataTransaksi(&dataTransaksi, &NTransaksi)
 	menu(&dataBarang, &dataTransaksi, &NBarang, &NTransaksi)
 	fmt.Println(dataBarang[1].namaBarang, dataBarang[1].harga, dataBarang[1].stok)
 	for i := 0; i < NBarang; i++ {
