@@ -26,19 +26,24 @@ type arrBarang [NMAX]dataBarang
 type arrTransaksi [NMAX]dataTransaksi
 
 func inputDataBarang(T *arrBarang, N *int) {
-	var i, harga, stok int
-	var nama string
-
-	fmt.Println("Masukkan data barang:")
-	fmt.Scan(&nama, &harga, &stok)
-	for T[i].namaBarang != "x" && T[i].harga != -1 && T[i].stok != -1 {
-		T[i].namaBarang = nama
-		T[i].harga = harga
-		T[i].stok = stok
-		fmt.Scan(&nama, &harga, &stok)
-		i++
+	*T = arrBarang{
+		{"beras", 10000, 18},
+		{"sagu", 16000, 15},
+		{"gulaPasir", 10500, 30},
+		{"gulaMerah", 9500, 36},
+		{"telur", 3000, 154},
+		{"minyakGoreng", 30000, 34},
+		{"margarin", 20000, 32},
+		{"susu", 14500, 61},
+		{"garam", 15000, 43},
+		{"ayam", 40000, 23},
+		{"ikan", 25000, 24},
+		{"lada", 4000, 80},
+		{"kecap", 5000, 58},
+		{"saos", 10000, 74},
+		{"terigu", 12000, 52},
 	}
-	*N = len(T)
+	*N = 15
 }
 
 func inputDataTransaksi(T *arrTransaksi, N *int) {
@@ -617,9 +622,9 @@ func main() {
 	var dataBarang arrBarang
 	var dataTransaksi arrTransaksi
 	var NBarang, NTransaksi int
-	// inputDataBarang(&dataBarang, &NBarang)
-	// inputDataTransaksi(&dataTransaksi, &NTransaksi)
+	inputDataBarang(&dataBarang, &NBarang)
+	inputDataTransaksi(&dataTransaksi, &NTransaksi)
 	menu(&dataBarang, &dataTransaksi, &NBarang, &NTransaksi)
 	fmt.Println(dataBarang[1].namaBarang, dataBarang[1].harga, dataBarang[1].stok)
-	fmt.Println(dataTransaksi[1].namaBarang, dataTransaksi[1].jenis, dataTransaksi[1].waktu.tanggal, dataTransaksi[1].waktu.bulan, dataTransaksi[1].waktu.tahun, dataTransaksi[1].nilai)
+	// fmt.Println(dataTransaksi[1].namaBarang, dataTransaksi[1].jenis, dataTransaksi[1].waktu.tanggal, dataTransaksi[1].waktu.bulan, dataTransaksi[1].waktu.tahun, dataTransaksi[1].nilai)
 }
