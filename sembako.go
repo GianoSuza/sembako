@@ -47,23 +47,24 @@ func inputDataBarang(T *arrBarang, N *int) {
 }
 
 func inputDataTransaksi(T *arrTransaksi, N *int) {
-	var i, tanggal, bulan, tahun int
-	var nama, jenis string
-
-	fmt.Println("Masukkan data transaksi:")
-	fmt.Scan(&nama, &tanggal, &bulan, &tahun, &jenis)
-
-	for T[i].namaBarang != "x" && T[i].waktu.tanggal != -1 && T[i].waktu.bulan != -1 && T[i].waktu.tahun != -1 && T[i].jenis != "x" {
-		T[i].namaBarang = nama
-		T[i].waktu.tanggal = tanggal
-		T[i].waktu.bulan = bulan
-		T[i].waktu.tahun = tahun
-		T[i].jenis = jenis
-		T[i].jumlahWaktu = (365 * tahun) + (30 * bulan) + tanggal
-		fmt.Scan(&nama, &tanggal, &bulan, &tahun, &jenis)
-		i++
+	*T = arrTransaksi{
+		{"telur", "ubah", date{03, 01, 2023}, -14, 738428},
+		{"susu", "ubah", date{04, 01, 2023}, 9, 738429},
+		{"ikan", "ubah", date{04, 01, 2023}, 11, 738429},
+		{"beras", "ubah", date{05, 01, 2023}, 22, 738430},
+		{"beras", "ubah", date{05, 01, 2023}, -5, 738430},
+		{"terigu", "tambah", date{07, 01, 2023}, 13, 738432},
+		{"saos", "ubah", date{07, 01, 2023}, -24, 738432},
+		{"kecap", "ubah", date{10, 01, 2023}, -8, 738435},
+		{"lada", "ubah", date{10, 01, 2023}, 25, 738435},
+		{"ayam", "ubah", date{11, 01, 2023}, -3, 735436},
+		{"beras", "ubah", date{11, 01, 2023}, 15, 735436},
+		{"minyakGoreng", "ubah", date{11, 01, 2023}, -4, 735436},
+		{"ikan", "ubah", date{12, 01, 2023}, -4, 735437},
+		{"telur", "ubah", date{12, 01, 2023}, -34, 735437},
+		{"sagu", "ubah", date{12, 01, 2023}, -10, 735437},
 	}
-	*N = len(T)
+	*N = 15
 }
 
 func idxData_nama(T arrBarang, N int, x string) int {
@@ -251,10 +252,11 @@ func modifikasiTambah(T *arrBarang, X *arrTransaksi, N, N1 *int) {
 	fmt.Print("waktu (DD MM YYYY): ")
 	fmt.Scan(&tanggal, &bulan, &tahun)
 
-	T[*N+1].namaBarang = nama
-	T[*N+1].harga = harga
-	T[*N+1].stok = stok
+	T[*N].namaBarang = nama
+	T[*N].harga = harga
+	T[*N].stok = stok
 	fmt.Println("\nsukses ditambah")
+	*N++
 
 	X[*N1+1].namaBarang = nama
 	X[*N1+1].waktu.tanggal = tanggal
@@ -262,6 +264,7 @@ func modifikasiTambah(T *arrBarang, X *arrTransaksi, N, N1 *int) {
 	X[*N1+1].waktu.tahun = tahun
 	X[*N1+1].jenis = "tambah"
 	X[*N1+1].nilai = stok
+	*N1++
 }
 
 func modifikasiHapus(T *arrBarang, X *arrTransaksi, N, N1 *int, idx int) {
@@ -270,17 +273,19 @@ func modifikasiHapus(T *arrBarang, X *arrTransaksi, N, N1 *int, idx int) {
 	fmt.Print("waktu (DD MM YYYY): ")
 	fmt.Scan(&tanggal, &bulan, &tahun)
 
-	X[*N1+1].namaBarang = T[idx].namaBarang
-	X[*N1+1].waktu.tanggal = tanggal
-	X[*N1+1].waktu.bulan = bulan
-	X[*N1+1].waktu.tahun = tahun
-	X[*N1+1].jenis = "hapus"
-	X[*N1+1].nilai = 0 - T[idx].stok
+	X[*N1].namaBarang = T[idx].namaBarang
+	X[*N1].waktu.tanggal = tanggal
+	X[*N1].waktu.bulan = bulan
+	X[*N1].waktu.tahun = tahun
+	X[*N1].jenis = "hapus"
+	X[*N1].nilai = 0 - T[idx].stok
+	*N1++
 
 	for i := idx; i < *N; i++ {
 		T[i] = T[i+1]
 	}
 	fmt.Println("\nsukses dihapus")
+	*N--
 }
 
 func modifikasiUbah(T *arrBarang, X *arrTransaksi, N, N1 *int, idx int) {
@@ -303,6 +308,7 @@ func modifikasiUbah(T *arrBarang, X *arrTransaksi, N, N1 *int, idx int) {
 		fmt.Scan(&a)
 		T[idx].namaBarang = a
 		fmt.Println("sukses diubah")
+
 	} else if pilihan == 2 {
 		fmt.Print("ubah harga: ")
 		fmt.Scan(&b)
@@ -316,12 +322,14 @@ func modifikasiUbah(T *arrBarang, X *arrTransaksi, N, N1 *int, idx int) {
 		fmt.Scan(&tanggal, &bulan, &tahun)
 		T[idx].stok = c
 		fmt.Println("\nsukses diubah")
-		X[*N1+1].namaBarang = T[idx].namaBarang
-		X[*N1+1].waktu.tanggal = tanggal
-		X[*N1+1].waktu.bulan = bulan
-		X[*N1+1].waktu.tahun = tahun
-		X[*N1+1].jenis = "ubah"
-		X[*N1+1].nilai = c - T[idx].stok
+
+		X[*N1].namaBarang = T[idx].namaBarang
+		X[*N1].waktu.tanggal = tanggal
+		X[*N1].waktu.bulan = bulan
+		X[*N1].waktu.tahun = tahun
+		X[*N1].jenis = "ubah"
+		X[*N1].nilai = c - T[idx].stok
+		*N1++
 	}
 }
 
@@ -382,10 +390,12 @@ func cariHarga(T *arrBarang, X *arrTransaksi, N, N1 *int) {
 		idx = idxMaksimum(*T, *X, *N, *N1, 1)
 		fmt.Println("nama barang", "\t", "harga", "\t", "stok")
 		fmt.Println(T[idx].namaBarang, "\t", T[idx].harga, "\t", T[idx].stok)
+
 	} else if pilihan == 2 {
 		idx = idxMinimum(*T, *X, *N, *N1, 1)
 		fmt.Println("nama barang", "\t", "harga", "\t", "stok")
 		fmt.Println(T[idx].namaBarang, "\t", T[idx].harga, "\t", T[idx].stok)
+
 	} else if pilihan == 3 {
 		fmt.Println("====================")
 		fmt.Println("  INVENTORI BARANG  ")
@@ -623,8 +633,13 @@ func main() {
 	var dataTransaksi arrTransaksi
 	var NBarang, NTransaksi int
 	inputDataBarang(&dataBarang, &NBarang)
-	inputDataTransaksi(&dataTransaksi, &NTransaksi)
+	// inputDataTransaksi(&dataTransaksi, &NTransaksi)
 	menu(&dataBarang, &dataTransaksi, &NBarang, &NTransaksi)
 	fmt.Println(dataBarang[1].namaBarang, dataBarang[1].harga, dataBarang[1].stok)
+	for i := 0; i < NBarang; i++ {
+		fmt.Println(dataBarang[i].namaBarang, dataBarang[i].harga, dataBarang[i].stok)
+	}
+	fmt.Println(NBarang)
 	// fmt.Println(dataTransaksi[1].namaBarang, dataTransaksi[1].jenis, dataTransaksi[1].waktu.tanggal, dataTransaksi[1].waktu.bulan, dataTransaksi[1].waktu.tahun, dataTransaksi[1].nilai)
 }
+
