@@ -640,6 +640,10 @@ func main() {
 		fmt.Println(dataBarang[i].namaBarang, dataBarang[i].harga, dataBarang[i].stok)
 	}
 	fmt.Println(NBarang)
-	// fmt.Println(dataTransaksi[1].namaBarang, dataTransaksi[1].jenis, dataTransaksi[1].waktu.tanggal, dataTransaksi[1].waktu.bulan, dataTransaksi[1].waktu.tahun, dataTransaksi[1].nilai)
+	
+	for i := 0; i < NBarang; i++ {
+		fmt.Println(dataTransaksi[1].namaBarang, dataTransaksi[1].jenis, dataTransaksi[1].waktu.tanggal, dataTransaksi[1].waktu.bulan, dataTransaksi[1].waktu.tahun, dataTransaksi[1].nilai)
+	}
+	fmt.Println(NTransaksi)
 }
 
