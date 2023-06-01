@@ -614,7 +614,7 @@ func cariEkstrim(pilihan *int) {
 }
 
 func main() {
-	var dataBarang arrBarang
+	
 	var dataTransaksi arrTransaksi
 	var NBarang, NTransaksi int
 	// inputDataBarang(&dataBarang, &NBarang)
