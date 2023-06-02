@@ -707,6 +707,20 @@ func cariEkstrim() int {
 	return pilihan
 }
 
+func exit() int {
+	var pilihan int
+
+	fmt.Println("====================")
+	fmt.Println("  INVENTORI BARANG  ")
+	fmt.Println("1. menu")
+	fmt.Println("2. exit")
+	fmt.Println("====================")
+	fmt.Print("pilih: ")
+	fmt.Scan(&pilihan)
+
+	return pilihan
+}
+
 func main() {
 	var dataBarang arrBarang
 	var dataTransaksi arrTransaksi
@@ -715,6 +729,9 @@ func main() {
 	inputDataTransaksi(&dataTransaksi, &NTransaksi)
 	menu(&dataBarang, &dataTransaksi, &NBarang, &NTransaksi)
 
+	for exit() == 1 {
+		menu(&dataBarang, &dataTransaksi, &NBarang, &NTransaksi)
+	}
 	// for i := 0; i < NBarang; i++ {
 	// 	fmt.Println(dataBarang[i].namaBarang, dataBarang[i].harga, dataBarang[i].stok)
 	// }
