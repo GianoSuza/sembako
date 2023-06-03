@@ -1,0 +1,167 @@
+Aplikasi Inventori Barang
+Deskripsi: Aplikasi ini digunakan oleh Lembaga Sembako. Data yang diolah adalah data-data sembako yang masuk ke gudang dan juga barang yang keluar dari gudang.
+Spesifikasi:
+a. Admin bisa melakukan pencatatan data barang, yaitu meliputi penambahan, pengubahan, dan penghapusan
+data barang.
+b. Admin bisa melakukan pencatatan setiap data transaksi barang yang masuk dan keluar pada waktu tertentu.
+c. Admin bisa melakukan pencarian data barang dengan kata kunci dan kategori tertentu.
+d. Data barang bisa ditampilkan baik terurut ataupun tidak. Pengurutan data bisa berdasarkan kategori-kategori
+tertentu (misalnya jumlah stok kesediaannya).
+
+modifikasi data barang:
+-tambah
+-ubah:
+	-nama
+	-harga
+	-stok
+	-nilai
+-hapus
+
+array:
+-data barang:
+	-nama
+	-harga
+	-stok
+-transaksi (pencatatan modifikasi):
+	-nama
+	-waktu
+	-jenis modifikasi
+
+bisa nyari data:
+-nama
+-harga
+-stok
+
+bisa ngurutin data (ascending/descending):
+-nama(suplemen)
+-harga
+-stok
+
+menu:
+-pengubahan data
+-pencarian data
+-tampilkan data
+-tampilkan transaksi
+
+tampilan menu:
+====================
+  INVENTORI BARANG
+1. modifikasi data
+2. cari data
+3. tampilan data
+====================
+pilih: (input)
+
+tampilan modifikasi data(1):
+====================
+  INVENTORI BARANG
+modifikasi:
+1. tambah data
+2. ubah data
+3. hapus data
+====================
+pilih: (input)
+
+tampilan modifikasi data(1) tambah data(1)/ubah data(2)/hapus data(3):
+====================
+  INVENTORI BARANG
+====================
+nama barang: (input)
+
+tampilan modifikasi data(1) ubah data(2):
+====================
+  INVENTORI BARANG
+modifikasi:
+1. nama barang
+2. harga barang
+3. stok
+====================
+pilih: (input)
+
+tampilan cari data(2):
+====================
+  INVENTORI BARANG
+cari:
+1. nama barang
+2. harga barang
+3. stok
+4. transaksi
+====================
+pilih: (input)
+
+tampilan cari data(2) transaksi(4):
+====================
+  INVENTORI BARANG
+cari data transaksi:
+1. nama barang
+2. waktu transaksi
+3. jenis
+4. nilai
+====================
+pilih: (input)
+
+tampilan cari data(2) transaksi(4) jenis(3):
+====================
+  INVENTORI BARANG
+cari jenis data transaksi:
+1. tambah data
+2. ubah data
+3. hapus data
+====================
+pilih: (input)
+
+tampilan cari data(2) setelah pilihan:
+====================
+  INVENTORI BARANG
+cari:
+1. nilai maksimum
+2. nilai minimum
+3. lainnya
+====================
+pilihan: (input)
+
+tampilan tampilan data(3):
+====================
+  INVENTORI BARANG
+tampilan:
+1. data barang
+2. transaksi
+====================
+pilih: (input)
+
+tampilan (pengurutan) tampilan data(3) data barang(1)/transaksi(2):
+====================
+  INVENTORI BARANG
+pengurutan:
+1. ascending
+2. descending
+====================
+pilih: (input)
+
+tampilan (pengurutan) tampilan data(3) data barang(1):
+====================
+  INVENTORI BARANG
+tampilan data barang:
+1. nama barang
+2. harga barang
+3. stok barang
+====================
+pilih: (input)
+
+tampilan (pengurutan) tampilan data(3) transaksi(2):
+====================
+  INVENTORI BARANG
+tampilan data transaksi:
+1. nama barang
+2. waktu transaksi
+3. nilai
+====================
+pilih: (input)
+
+tampilan akhir program:
+====================
+  INVENTORI BARANG
+1. balik menu
+2. keluar
+====================
+pilih: (input)
