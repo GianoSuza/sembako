@@ -78,28 +78,6 @@ func idxData_nama(T arrBarang, N int, x string) int {
 	return i - 1
 }
 
-func idxData_harga(T arrBarang, N int, x int) int {
-	var found bool
-	var i int
-
-	for i < N && !found {
-		found = T[i].harga == x
-		i++
-	}
-	return i - 1
-}
-
-func idxData_stok(T arrBarang, N int, x int) int {
-	var found bool
-	var i int
-
-	for i < N && !found {
-		found = T[i].stok == x
-		i++
-	}
-	return i - 1
-}
-
 func idxMaksimum(T arrBarang, X arrTransaksi, N, N1, x int) int {
 	var idx int
 	var j int = 1
@@ -613,7 +591,7 @@ func cariNama(T *arrBarang, X *arrTransaksi, N, N1 *int) {
 	}
 
 	if j == 0 {
-		fmt.Print("\ntidak ada barang")
+		fmt.Print("tidak ada barang\n")
 	}
 }
 
@@ -1017,6 +995,7 @@ func tampilanDataBarang(T *arrBarang, X *arrTransaksi, N, N1 *int, x int) {
 		} else if x == 2 {
 			descending(&*T, &*X, *N, *N1, 2)
 		}
+
 	}
 
 	print(*T, *X, *N, *N1, 1)
@@ -1048,6 +1027,7 @@ func tampilanDataTransaksi(T *arrBarang, X *arrTransaksi, N, N1 *int, x int) {
 		} else if x == 2 {
 			descending(&*T, &*X, *N, *N1, 4)
 		}
+
 	}
 
 	print(*T, *X, *N, *N1, 2)
@@ -1073,6 +1053,7 @@ func main() {
 	var dataBarang arrBarang
 	var dataTransaksi arrTransaksi
 	var NBarang, NTransaksi int
+
 	inputDataBarang(&dataBarang, &NBarang)
 	inputDataTransaksi(&dataTransaksi, &NTransaksi)
 	menu(&dataBarang, &dataTransaksi, &NBarang, &NTransaksi)
