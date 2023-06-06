@@ -78,6 +78,28 @@ func idxData_nama(T arrBarang, N int, x string) int {
 	return i - 1
 }
 
+func idxData_harga(T arrBarang, N int, x int) int {
+	var found bool
+	var i int
+
+	for i < N && !found {
+		found = T[i].harga == x
+		i++
+	}
+	return i - 1
+}
+
+func idxData_stok(T arrBarang, N int, x int) int {
+	var found bool
+	var i int
+
+	for i < N && !found {
+		found = T[i].stok == x
+		i++
+	}
+	return i - 1
+}
+
 func idxMaksimum(T arrBarang, X arrTransaksi, N, N1, x int) int {
 	var idx int
 	var j int = 1
@@ -369,13 +391,23 @@ func descending(T *arrBarang, X *arrTransaksi, N, N1, x int) {
 
 func print(T arrBarang, X arrTransaksi, N, N1, x int) {
 	if x == 1 {
+		fmt.Println("nama", "\t\t", "harga", "\t", "stok")
 		for i := 0; i < N; i++ {
-			fmt.Println(T[i].namaBarang, T[i].harga, T[i].stok)
+			if len(T[i].namaBarang) <= 6 && len(T[i].namaBarang) >= 1 {
+				fmt.Println(T[i].namaBarang, "\t\t", T[i].harga, "\t", T[i].stok)
+			} else if len(T[i].namaBarang) >= 7 {
+				fmt.Println(T[i].namaBarang, "\t", T[i].harga, "\t", T[i].stok)
+			}
 		}
 
 	} else if x == 2 {
+		fmt.Println("\nnama", "\t\t", "jenis", "\t", "tanggal", "\t", "bulan", "\t", "tahun", "\t", "nilai")
 		for i := 0; i < N1; i++ {
-			fmt.Println(X[i].namaBarang, X[i].jenis, X[i].waktu.tanggal, X[i].waktu.bulan, X[i].waktu.tahun, X[i].nilai)
+			if len(X[i].namaBarang) <= 6 && len(X[i].namaBarang) >= 1 {
+				fmt.Println(X[i].namaBarang, "\t\t", X[i].jenis, "\t", X[i].waktu.tanggal, "\t\t", X[i].waktu.bulan, "\t", X[i].waktu.tahun, "\t", X[i].nilai)
+			} else if len(X[i].namaBarang) >= 7 {
+				fmt.Println(X[i].namaBarang, "\t", X[i].jenis, "\t", X[i].waktu.tanggal, "\t\t", X[i].waktu.bulan, "\t", X[i].waktu.tahun, "\t", X[i].nilai)
+			}
 		}
 	}
 }
@@ -392,7 +424,6 @@ func menu(T *arrBarang, X *arrTransaksi, N, N1 *int) {
 	fmt.Print("pilih: ")
 	fmt.Scan(&pilihan)
 	fmt.Print("\n")
-
 	if pilihan == 1 {
 		modifikasi(&*T, &*X, &*N, &*N1)
 	} else if pilihan == 2 {
@@ -400,10 +431,11 @@ func menu(T *arrBarang, X *arrTransaksi, N, N1 *int) {
 	} else if pilihan == 3 {
 		tampilan(&*T, &*X, &*N, &*N1)
 	}
+
 }
 
 func modifikasi(T *arrBarang, X *arrTransaksi, N, N1 *int) {
-	var pilihan, idx int
+	var idx, pilihan int
 	var nama string
 
 	fmt.Println("====================")
@@ -412,6 +444,7 @@ func modifikasi(T *arrBarang, X *arrTransaksi, N, N1 *int) {
 	fmt.Println("1. tambah data")
 	fmt.Println("2. ubah data")
 	fmt.Println("3. hapus data")
+	fmt.Println("4. kembali")
 	fmt.Println("====================")
 	fmt.Print("pilih: ")
 	fmt.Scan(&pilihan)
@@ -439,6 +472,8 @@ func modifikasi(T *arrBarang, X *arrTransaksi, N, N1 *int) {
 
 		idx = idxData_nama(*T, *N, nama)
 		modifikasiHapus(&*T, &*X, &*N, &*N1, idx)
+	} else if pilihan == 4 {
+		menu(&*T, &*X, &*N, &*N1)
 	}
 }
 
@@ -555,6 +590,7 @@ func cari(T *arrBarang, X *arrTransaksi, N, N1 *int) {
 	fmt.Println("2. harga barang")
 	fmt.Println("3. stok")
 	fmt.Println("4. transaksi")
+	fmt.Println("5. kembali")
 	fmt.Println("====================")
 	fmt.Print("pilih: ")
 	fmt.Scan(&pilihan)
@@ -568,6 +604,8 @@ func cari(T *arrBarang, X *arrTransaksi, N, N1 *int) {
 		cariStok(&*T, &*X, &*N, &*N1)
 	} else if pilihan == 4 {
 		cariTransaksi(&*T, &*X, &*N, &*N1)
+	} else if pilihan == 5 {
+		menu(&*T, &*X, &*N, &*N1)
 	}
 }
 
@@ -584,14 +622,23 @@ func cariNama(T *arrBarang, X *arrTransaksi, N, N1 *int) {
 
 	for i := 0; i < *N; i++ {
 		if T[i].namaBarang == nama {
-			fmt.Println("nama", "\t", "harga", "\t", "stok")
-			fmt.Println(T[i].namaBarang, "\t", T[i].harga, "\t", T[i].stok)
+			if len(T[i].namaBarang) <= 6 && len(T[i].namaBarang) >= 1 {
+				if j == 0 {
+					fmt.Println("nama", "\t\t", "harga", "\t", "stok")
+				}
+				fmt.Println(T[i].namaBarang, "\t\t", T[i].harga, "\t", T[i].stok)
+			} else if len(T[i].namaBarang) >= 7 {
+				if j == 0 {
+					fmt.Println("nama", "\t\t", "harga", "\t", "stok")
+				}
+				fmt.Println(T[i].namaBarang, "\t", T[i].harga, "\t", T[i].stok)
+			}
 			j++
 		}
 	}
 
 	if j == 0 {
-		fmt.Print("tidak ada barang\n")
+		fmt.Print("\ntidak ada barang")
 	}
 }
 
@@ -603,15 +650,27 @@ func cariHarga(T *arrBarang, X *arrTransaksi, N, N1 *int) {
 
 	if pilihan == 1 {
 		idx = idxMaksimum(*T, *X, *N, *N1, 1)
-		fmt.Println("nama", "\t", "harga", "\t", "stok")
-		fmt.Println(T[idx].namaBarang, "\t", T[idx].harga, "\t", T[idx].stok)
-		fmt.Print("\n")
+		if len(T[idx].namaBarang) <= 6 && len(T[idx].namaBarang) >= 1 {
+			fmt.Println("nama", "\t", "harga", "\t", "stok")
+			fmt.Println(T[idx].namaBarang, "\t", T[idx].harga, "\t", T[idx].stok)
+			fmt.Print("\n")
+		} else if len(T[idx].namaBarang) >= 7 {
+			fmt.Println("nama", "\t\t", "harga", "\t", "stok")
+			fmt.Println(T[idx].namaBarang, "\t", T[idx].harga, "\t", T[idx].stok)
+			fmt.Print("\n")
+		}
 
 	} else if pilihan == 2 {
 		idx = idxMinimum(*T, *X, *N, *N1, 1)
-		fmt.Println("nama", "\t", "harga", "\t", "stok")
-		fmt.Println(T[idx].namaBarang, "\t", T[idx].harga, "\t", T[idx].stok)
-		fmt.Print("\n")
+		if len(T[idx].namaBarang) <= 6 && len(T[idx].namaBarang) >= 1 {
+			fmt.Println("nama", "\t", "harga", "\t", "stok")
+			fmt.Println(T[idx].namaBarang, "\t", T[idx].harga, "\t", T[idx].stok)
+			fmt.Print("\n")
+		} else if len(T[idx].namaBarang) >= 7 {
+			fmt.Println("nama", "\t\t", "harga", "\t", "stok")
+			fmt.Println(T[idx].namaBarang, "\t", T[idx].harga, "\t", T[idx].stok)
+			fmt.Print("\n")
+		}
 
 	} else if pilihan == 3 {
 		fmt.Println("====================")
@@ -624,14 +683,19 @@ func cariHarga(T *arrBarang, X *arrTransaksi, N, N1 *int) {
 		for i := 0; i < *N; i++ {
 			if T[i].harga == harga {
 				found = true
+
 			}
 		}
 
 		if found {
-			fmt.Println("\nnama", "\t", "harga", "\t", "stok")
+			fmt.Println("nama", "\t\t", "harga", "\t", "stok")
 			for i := 0; i < *N; i++ {
 				if T[i].harga == harga {
-					fmt.Println(T[i].namaBarang, "\t", T[i].harga, "\t", T[i].stok)
+					if len(T[i].namaBarang) <= 6 && len(T[i].namaBarang) >= 1 {
+						fmt.Println(T[i].namaBarang, "\t\t", T[i].harga, "\t", T[i].stok)
+					} else if len(T[idx].namaBarang) >= 7 {
+						fmt.Println(T[i].namaBarang, "\t", T[i].harga, "\t", T[i].stok)
+					}
 					j++
 				}
 			}
@@ -640,6 +704,8 @@ func cariHarga(T *arrBarang, X *arrTransaksi, N, N1 *int) {
 		if j == 0 {
 			fmt.Print("\ntidak ada barang")
 		}
+	} else if pilihan == 4 {
+		cari(&*T, &*X, &*N, &*N1)
 	}
 }
 
@@ -651,14 +717,26 @@ func cariStok(T *arrBarang, X *arrTransaksi, N, N1 *int) {
 
 	if pilihan == 1 {
 		idx = idxMaksimum(*T, *X, *N, *N1, 2)
-		fmt.Println("nama", "\t", "harga", "\t", "stok")
-		fmt.Println(T[idx].namaBarang, "\t", T[idx].harga, "\t", T[idx].stok)
-		fmt.Print("\n")
+		if len(T[idx].namaBarang) <= 6 && len(T[idx].namaBarang) >= 1 {
+			fmt.Println("nama", "\t", "harga", "\t", "stok")
+			fmt.Println(T[idx].namaBarang, "\t", T[idx].harga, "\t", T[idx].stok)
+			fmt.Print("\n")
+		} else if len(T[idx].namaBarang) >= 7 {
+			fmt.Println("nama", "\t\t", "harga", "\t", "stok")
+			fmt.Println(T[idx].namaBarang, "\t", T[idx].harga, "\t", T[idx].stok)
+			fmt.Print("\n")
+		}
 	} else if pilihan == 2 {
 		idx = idxMinimum(*T, *X, *N, *N1, 2)
-		fmt.Println("nama", "\t", "harga", "\t", "stok")
-		fmt.Println(T[idx].namaBarang, "\t", T[idx].harga, "\t", T[idx].stok)
-		fmt.Print("\n")
+		if len(T[idx].namaBarang) <= 6 && len(T[idx].namaBarang) >= 1 {
+			fmt.Println("nama", "\t", "harga", "\t", "stok")
+			fmt.Println(T[idx].namaBarang, "\t", T[idx].harga, "\t", T[idx].stok)
+			fmt.Print("\n")
+		} else if len(T[idx].namaBarang) >= 7 {
+			fmt.Println("nama", "\t\t", "harga", "\t", "stok")
+			fmt.Println(T[idx].namaBarang, "\t", T[idx].harga, "\t", T[idx].stok)
+			fmt.Print("\n")
+		}
 	} else if pilihan == 3 {
 		fmt.Println("====================")
 		fmt.Println("  INVENTORI BARANG  ")
@@ -674,10 +752,14 @@ func cariStok(T *arrBarang, X *arrTransaksi, N, N1 *int) {
 		}
 
 		if found {
-			fmt.Println("\nnama", "\t", "harga", "\t", "stok")
+			fmt.Println("nama", "\t\t", "harga", "\t", "stok")
 			for i := 0; i < *N; i++ {
 				if T[i].stok == stok {
-					fmt.Println(T[i].namaBarang, "\t", T[i].harga, "\t", T[i].stok)
+					if len(T[i].namaBarang) <= 6 && len(T[i].namaBarang) >= 1 {
+						fmt.Println(T[i].namaBarang, "\t\t", T[i].harga, "\t", T[i].stok)
+					} else if len(T[i].namaBarang) >= 7 {
+						fmt.Println(T[i].namaBarang, "\t", T[i].harga, "\t", T[i].stok)
+					}
 					j++
 				}
 			}
@@ -686,6 +768,8 @@ func cariStok(T *arrBarang, X *arrTransaksi, N, N1 *int) {
 		if j == 0 {
 			fmt.Print("tidak ada barang\n")
 		}
+	} else if pilihan == 4 {
+		cari(&*T, &*X, &*N, &*N1)
 	}
 }
 
@@ -699,6 +783,7 @@ func cariTransaksi(T *arrBarang, X *arrTransaksi, N, N1 *int) {
 	fmt.Println("2. waktu transaksi")
 	fmt.Println("3. jenis")
 	fmt.Println("4. nilai")
+	fmt.Println("5. kembali")
 	fmt.Println("====================")
 	fmt.Print("pilih: ")
 	fmt.Scan(&pilihan)
@@ -709,9 +794,11 @@ func cariTransaksi(T *arrBarang, X *arrTransaksi, N, N1 *int) {
 	} else if pilihan == 2 {
 		cariTransaksiWaktu(&*T, &*X, &*N, &*N1)
 	} else if pilihan == 3 {
-		cariTransaksiJenis(&*X, &*N1)
+		cariTransaksiJenis(&*T, &*X, &*N, &*N1)
 	} else if pilihan == 4 {
 		cariTransaksiNilai(&*T, &*X, &*N, &*N1)
+	} else if pilihan == 5 {
+		cari(&*T, &*X, &*N, &*N1)
 	}
 }
 
@@ -734,10 +821,14 @@ func cariTransaksiNama(T *arrBarang, X *arrTransaksi, N, N1 *int) {
 	}
 
 	if found {
-		fmt.Println("\nnama", "\t", "jenis", "\t", "nilai", "\t", "tanggal", "\t", "bulan", "\t", "tahun")
+		fmt.Println("\nnama", "\t\t", "jenis", "\t", "tanggal", "\t", "bulan", "\t", "tahun", "\t", "nilai")
 		for i := 0; i < *N; i++ {
 			if X[i].namaBarang == nama {
-				fmt.Println(X[i].namaBarang, "\t", X[i].jenis, "\t", X[i].nilai, "\t", X[i].waktu.tanggal, "\t\t", X[i].waktu.bulan, "\t", X[i].waktu.tahun)
+				if len(X[i].namaBarang) <= 6 && len(X[i].namaBarang) >= 1 {
+					fmt.Println(X[i].namaBarang, "\t\t", X[i].jenis, "\t", X[i].waktu.tanggal, "\t\t", X[i].waktu.bulan, "\t", X[i].waktu.tahun, "\t", X[i].nilai)
+				} else if len(X[i].namaBarang) >= 7 {
+					fmt.Println(X[i].namaBarang, "\t", X[i].jenis, "\t", X[i].waktu.tanggal, "\t\t", X[i].waktu.bulan, "\t1", X[i].waktu.tahun, "\t", X[i].nilai)
+				}
 				j++
 			}
 		}
@@ -758,6 +849,7 @@ func cariTransaksiWaktu(T *arrBarang, X *arrTransaksi, N, N1 *int) {
 	fmt.Println("1. nilai maksimum")
 	fmt.Println("2. nilai minimum")
 	fmt.Println("3. lainnya")
+	fmt.Println("4.kembali")
 	fmt.Println("====================")
 	fmt.Print("pilih: ")
 	fmt.Scan(&pilihan)
@@ -765,13 +857,23 @@ func cariTransaksiWaktu(T *arrBarang, X *arrTransaksi, N, N1 *int) {
 
 	if pilihan == 1 {
 		idx = idxMaksimum(*T, *X, *N, *N1, 3)
-		fmt.Println("\nnama", "\t", "jenis", "\t", "nilai", "\t", "tanggal", "\t", "bulan", "\t", "tahun")
-		fmt.Println(X[idx].namaBarang, "\t", X[idx].jenis, "\t", X[idx].nilai, "\t", X[idx].waktu.tanggal, "\t\t", X[idx].waktu.bulan, "\t", X[idx].waktu.tahun)
+		if len(X[idx].namaBarang) <= 6 && len(X[idx].namaBarang) >= 1 {
+			fmt.Println("\nnama", "\t", "jenis", "\t", "tanggal", "\t", "bulan", "\t", "tahun", "\t", "nilai")
+			fmt.Println(X[idx].namaBarang, "\t", X[idx].jenis, "\t", X[idx].waktu.tanggal, "\t\t", X[idx].waktu.bulan, "\t", X[idx].waktu.tahun, "\t", X[idx].nilai)
+		} else if len(X[idx].namaBarang) >= 7 {
+			fmt.Println("\nnama", "\t\t", "jenis", "\t", "tanggal", "\t", "bulan", "\t", "tahun", "\t", "nilai")
+			fmt.Println(X[idx].namaBarang, "\t", X[idx].jenis, "\t", X[idx].waktu.tanggal, "\t\t", X[idx].waktu.bulan, "\t", X[idx].waktu.tahun, "\t", X[idx].nilai)
+		}
 
 	} else if pilihan == 2 {
 		idx = idxMinimum(*T, *X, *N, *N1, 3)
-		fmt.Println("\nnama", "\t", "jenis", "\t", "nilai", "\t", "tanggal", "\t", "bulan", "\t", "tahun")
-		fmt.Println(X[idx].namaBarang, "\t", X[idx].jenis, "\t", X[idx].nilai, "\t", X[idx].waktu.tanggal, "\t\t", X[idx].waktu.bulan, "\t", X[idx].waktu.tahun)
+		if len(X[idx].namaBarang) <= 6 && len(X[idx].namaBarang) >= 1 {
+			fmt.Println("\nnama", "\t", "jenis", "\t", "tanggal", "\t", "bulan", "\t", "tahun", "\t", "nilai")
+			fmt.Println(X[idx].namaBarang, "\t", X[idx].jenis, "\t", X[idx].waktu.tanggal, "\t\t", X[idx].waktu.bulan, "\t", X[idx].waktu.tahun, "\t", X[idx].nilai)
+		} else if len(X[idx].namaBarang) >= 7 {
+			fmt.Println("\nnama", "\t\t", "jenis", "\t", "tanggal", "\t", "bulan", "\t", "tahun", "\t", "nilai")
+			fmt.Println(X[idx].namaBarang, "\t", X[idx].jenis, "\t", X[idx].waktu.tanggal, "\t\t", X[idx].waktu.bulan, "\t", X[idx].waktu.tahun, "\t", X[idx].nilai)
+		}
 
 	} else if pilihan == 3 {
 		fmt.Println("====================")
@@ -790,10 +892,14 @@ func cariTransaksiWaktu(T *arrBarang, X *arrTransaksi, N, N1 *int) {
 		}
 
 		if found {
-			fmt.Println("\nnama", "\t", "jenis", "\t", "nilai", "\t", "tanggal", "\t", "bulan", "\t", "tahun")
+			fmt.Println("\nnama", "\t\t", "jenis", "\t", "tanggal", "\t", "bulan", "\t", "tahun", "\t", "nilai")
 			for i := 0; i < *N; i++ {
 				if X[i].jumlahWaktu == waktu {
-					fmt.Println(X[i].namaBarang, "\t", X[i].jenis, "\t", X[i].nilai, "\t", X[i].waktu.tanggal, "\t\t", X[i].waktu.bulan, "\t", X[i].waktu.tahun)
+					if len(X[i].namaBarang) <= 6 && len(X[i].namaBarang) >= 1 {
+						fmt.Println(X[i].namaBarang, "\t\t", X[i].jenis, "\t", X[i].waktu.tanggal, "\t\t", X[i].waktu.bulan, "\t", X[i].waktu.tahun, "\t", X[i].nilai)
+					} else if len(X[i].namaBarang) >= 7 {
+						fmt.Println(X[i].namaBarang, "\t", X[i].jenis, "\t", X[i].waktu.tanggal, "\t\t", X[i].waktu.bulan, "\t", X[i].waktu.tahun, "\t", X[i].nilai)
+					}
 					j++
 				}
 			}
@@ -802,6 +908,8 @@ func cariTransaksiWaktu(T *arrBarang, X *arrTransaksi, N, N1 *int) {
 		if j == 0 {
 			fmt.Print("\ntidak ada barang")
 		}
+	} else if pilihan == 4 {
+		cariTransaksi(&*T, &*X, &*N, &*N1)
 	}
 }
 
@@ -813,13 +921,23 @@ func cariTransaksiNilai(T *arrBarang, X *arrTransaksi, N, N1 *int) {
 
 	if pilihan == 1 {
 		idx = idxMaksimum(*T, *X, *N, *N1, 4)
-		fmt.Println("\nnama", "\t", "jenis", "\t", "nilai", "\t", "tanggal", "\t", "bulan", "\t", "tahun")
-		fmt.Println(X[idx].namaBarang, "\t", X[idx].jenis, "\t", X[idx].nilai, "\t", X[idx].waktu.tanggal, "\t\t", X[idx].waktu.bulan, "\t", X[idx].waktu.tahun)
+		if len(X[idx].namaBarang) <= 6 && len(X[idx].namaBarang) >= 1 {
+			fmt.Println("\nnama", "\t", "jenis", "\t", "tanggal", "\t", "bulan", "\t", "tahun", "\t", "nilai")
+			fmt.Println(X[idx].namaBarang, "\t", X[idx].jenis, "\t", X[idx].waktu.tanggal, "\t\t", X[idx].waktu.bulan, "\t", X[idx].waktu.tahun, "\t", X[idx].nilai)
+		} else if len(X[idx].namaBarang) >= 7 {
+			fmt.Println("\nnama", "\t\t", "jenis", "\t", "tanggal", "\t", "bulan", "\t", "tahun", "\t", "nilai")
+			fmt.Println(X[idx].namaBarang, "\t", X[idx].jenis, "\t", X[idx].waktu.tanggal, "\t\t", X[idx].waktu.bulan, "\t", X[idx].waktu.tahun, "\t", X[idx].nilai)
+		}
 
 	} else if pilihan == 2 {
 		idx = idxMinimum(*T, *X, *N, *N1, 4)
-		fmt.Println("\nnama", "\t", "jenis", "\t", "nilai", "\t", "tanggal", "\t", "bulan", "\t", "tahun")
-		fmt.Println(X[idx].namaBarang, "\t", X[idx].jenis, "\t", X[idx].nilai, "\t", X[idx].waktu.tanggal, "\t\t", X[idx].waktu.bulan, "\t", X[idx].waktu.tahun)
+		if len(X[idx].namaBarang) <= 6 && len(X[idx].namaBarang) >= 1 {
+			fmt.Println("\nnama", "\t", "jenis", "\t", "tanggal", "\t", "bulan", "\t", "tahun", "\t", "nilai")
+			fmt.Println(X[idx].namaBarang, "\t", X[idx].jenis, "\t", X[idx].waktu.tanggal, "\t\t", X[idx].waktu.bulan, "\t", X[idx].waktu.tahun, "\t", X[idx].nilai)
+		} else if len(X[idx].namaBarang) >= 7 {
+			fmt.Println("\nnama", "\t\t", "jenis", "\t", "tanggal", "\t", "bulan", "\t", "tahun", "\t", "nilai")
+			fmt.Println(X[idx].namaBarang, "\t", X[idx].jenis, "\t", X[idx].waktu.tanggal, "\t\t", X[idx].waktu.bulan, "\t", X[idx].waktu.tahun, "\t", X[idx].nilai)
+		}
 
 	} else if pilihan == 3 {
 		fmt.Println("====================")
@@ -836,10 +954,14 @@ func cariTransaksiNilai(T *arrBarang, X *arrTransaksi, N, N1 *int) {
 		}
 
 		if found {
-			fmt.Println("\nnama", "\t", "jenis", "\t", "nilai", "\t", "tanggal", "\t", "bulan", "\t", "tahun")
+			fmt.Println("\nnama", "\t\t", "jenis", "\t", "tanggal", "\t", "bulan", "\t", "tahun", "\t", "nilai")
 			for i := 0; i < *N1; i++ {
 				if X[i].nilai == nilai {
-					fmt.Println(X[i].namaBarang, "\t", X[i].jenis, "\t", X[i].nilai, "\t", X[i].waktu.tanggal, "\t\t", X[i].waktu.bulan, "\t", X[i].waktu.tahun)
+					if len(X[i].namaBarang) <= 6 && len(X[i].namaBarang) >= 1 {
+						fmt.Println(X[i].namaBarang, "\t\t", X[i].jenis, "\t", X[i].waktu.tanggal, "\t\t", X[i].waktu.bulan, "\t", X[i].waktu.tahun, "\t", X[i].nilai)
+					} else if len(X[i].namaBarang) >= 7 {
+						fmt.Println(X[i].namaBarang, "\t", X[i].jenis, "\t", X[i].waktu.tanggal, "\t\t", X[i].waktu.bulan, "\t", X[i].waktu.tahun, "\t", X[i].nilai)
+					}
 					j++
 				}
 			}
@@ -848,10 +970,12 @@ func cariTransaksiNilai(T *arrBarang, X *arrTransaksi, N, N1 *int) {
 		if j == 0 {
 			fmt.Print("\ntidak ada barang")
 		}
+	} else if pilihan == 4 {
+		cariTransaksi(&*T, &*X, &*N, &*N1)
 	}
 }
 
-func cariTransaksiJenis(X *arrTransaksi, N1 *int) {
+func cariTransaksiJenis(T *arrBarang, X *arrTransaksi, N, N1 *int) {
 	var pilihan int
 	var found bool
 
@@ -861,6 +985,7 @@ func cariTransaksiJenis(X *arrTransaksi, N1 *int) {
 	fmt.Println("1. tambah data")
 	fmt.Println("2. ubah data")
 	fmt.Println("3. hapus data")
+	fmt.Println("4. kembali")
 	fmt.Println("====================")
 	fmt.Print("pilih: ")
 	fmt.Scan(&pilihan)
@@ -874,10 +999,14 @@ func cariTransaksiJenis(X *arrTransaksi, N1 *int) {
 		}
 
 		if found {
-			fmt.Println("\nnama", "\t", "jenis", "\t", "nilai", "\t", "tanggal", "\t", "bulan", "\t", "tahun")
+			fmt.Println("\nnama", "\t\t", "jenis", "\t", "tanggal", "\t", "bulan", "\t", "tahun", "\t", "nilai")
 			for i := 0; i < *N1; i++ {
 				if X[i].jenis == "tambah" {
-					fmt.Println(X[i].namaBarang, "\t", X[i].jenis, "\t", X[i].nilai, "\t", X[i].waktu.tanggal, "\t\t", X[i].waktu.bulan, "\t", X[i].waktu.tahun)
+					if len(T[i].namaBarang) <= 6 && len(T[i].namaBarang) >= 1 {
+						fmt.Println(X[i].namaBarang, "\t\t", X[i].jenis, "\t", X[i].waktu.tanggal, "\t\t", X[i].waktu.bulan, "\t", X[i].waktu.tahun, "\t", X[i].nilai)
+					} else if len(T[i].namaBarang) >= 7 {
+						fmt.Println(X[i].namaBarang, "\t", X[i].jenis, "\t", X[i].waktu.tanggal, "\t\t", X[i].waktu.bulan, "\t", X[i].waktu.tahun, "\t", X[i].nilai)
+					}
 				}
 			}
 		}
@@ -889,10 +1018,14 @@ func cariTransaksiJenis(X *arrTransaksi, N1 *int) {
 		}
 
 		if found {
-			fmt.Println("\nnama", "\t", "jenis", "\t", "nilai", "\t", "tanggal", "\t", "bulan", "\t", "tahun")
+			fmt.Println("\nnama", "\t\t", "jenis", "\t", "tanggal", "\t", "bulan", "\t", "tahun", "\t", "nilai")
 			for i := 0; i < *N1; i++ {
 				if X[i].jenis == "ubah" {
-					fmt.Println(X[i].namaBarang, "\t", X[i].jenis, "\t", X[i].nilai, "\t", X[i].waktu.tanggal, "\t\t", X[i].waktu.bulan, "\t", X[i].waktu.tahun)
+					if len(X[i].namaBarang) <= 6 && len(X[i].namaBarang) >= 1 {
+						fmt.Println(X[i].namaBarang, "\t\t", X[i].jenis, "\t", X[i].waktu.tanggal, "\t\t", X[i].waktu.bulan, "\t", X[i].waktu.tahun, "\t", X[i].nilai)
+					} else if len(X[i].namaBarang) >= 7 {
+						fmt.Println(X[i].namaBarang, "\t", X[i].jenis, "\t", X[i].waktu.tanggal, "\t\t", X[i].waktu.bulan, "\t", X[i].waktu.tahun, "\t", X[i].nilai)
+					}
 				}
 			}
 		}
@@ -904,13 +1037,19 @@ func cariTransaksiJenis(X *arrTransaksi, N1 *int) {
 		}
 
 		if found {
-			fmt.Println("\nnama", "\t", "jenis", "\t", "nilai", "\t", "tanggal", "\t", "bulan", "\t", "tahun")
+			fmt.Println("\nnama", "\t\t", "jenis", "\t", "tanggal", "\t", "bulan", "\t", "tahun", "\t", "nilai")
 			for i := 0; i < *N1; i++ {
 				if X[i].jenis == "hapus" {
-					fmt.Println(X[i].namaBarang, "\t", X[i].jenis, "\t", X[i].nilai, "\t", X[i].waktu.tanggal, "\t\t", X[i].waktu.bulan, "\t", X[i].waktu.tahun)
+					if len(X[i].namaBarang) <= 6 && len(X[i].namaBarang) >= 1 {
+						fmt.Println(X[i].namaBarang, "\t\t", X[i].jenis, "\t", X[i].waktu.tanggal, "\t\t", X[i].waktu.bulan, "\t", X[i].waktu.tahun, "\t", X[i].nilai)
+					} else if len(X[i].namaBarang) >= 7 {
+						fmt.Println(X[i].namaBarang, "\t", X[i].jenis, "\t", X[i].waktu.tanggal, "\t\t", X[i].waktu.bulan, "\t", X[i].waktu.tahun, "\t", X[i].nilai)
+					}
 				}
 			}
 		}
+	} else if pilihan == 4 {
+		cariTransaksi(&*T, &*X, &*N, &*N1)
 	}
 }
 
@@ -923,6 +1062,7 @@ func cariEkstrim() int {
 	fmt.Println("1. nilai maksimum")
 	fmt.Println("2. nilai minimum")
 	fmt.Println("3. lainnya")
+	fmt.Println("4. kembali")
 	fmt.Println("====================")
 	fmt.Print("pilih: ")
 	fmt.Scan(&pilihan)
@@ -932,41 +1072,47 @@ func cariEkstrim() int {
 }
 
 func tampilan(T *arrBarang, X *arrTransaksi, N, N1 *int) {
-	var pilihan, pengurutan int
+	var pilihan, pilihPengurutan int
 
 	fmt.Println("====================")
 	fmt.Println("  INVENTORI BARANG  ")
 	fmt.Println("tampilan:")
 	fmt.Println("1. data barang")
 	fmt.Println("2. transaksi")
+	fmt.Println("3. kembali")
 	fmt.Println("====================")
 	fmt.Print("pilih: ")
 	fmt.Scan(&pilihan)
 	fmt.Print("\n")
 
-	pengurutan = cariPengurutan()
+	if pilihan == 1 || pilihan == 2 {
+		cariPengurutan(&*T, &*X, &*N, &*N1, &pilihPengurutan)
+	}
 
 	if pilihan == 1 {
-		tampilanDataBarang(&*T, &*X, &*N, &*N1, pengurutan)
+		tampilanDataBarang(&*T, &*X, &*N, &*N1, pilihPengurutan)
 	} else if pilihan == 2 {
-		tampilanDataTransaksi(&*T, &*X, &*N, &*N1, pengurutan)
+		tampilanDataTransaksi(&*T, &*X, &*N, &*N1, pilihPengurutan)
+	} else if pilihan == 3 {
+		menu(&*T, &*X, &*N, &*N1)
 	}
 }
 
-func cariPengurutan() int {
-	var pilihan int
+func cariPengurutan(T *arrBarang, X *arrTransaksi, N, N1 *int, pilihPengurutan *int) {
 
 	fmt.Println("====================")
 	fmt.Println("  INVENTORI BARANG  ")
 	fmt.Println("pengurutan:")
 	fmt.Println("1. ascending")
 	fmt.Println("2. descending")
+	fmt.Println("3. kembali")
 	fmt.Println("====================")
 	fmt.Print("pilih: ")
-	fmt.Scan(&pilihan)
+	fmt.Scan(&*pilihPengurutan)
 	fmt.Print("\n")
-
-	return pilihan
+	if *pilihPengurutan == 3 {
+		tampilan(&*T, &*X, &*N, &*N1)
+	}
 }
 
 func tampilanDataBarang(T *arrBarang, X *arrTransaksi, N, N1 *int, x int) {
@@ -977,6 +1123,7 @@ func tampilanDataBarang(T *arrBarang, X *arrTransaksi, N, N1 *int, x int) {
 	fmt.Println("tampilan data barang:")
 	fmt.Println("1. harga barang")
 	fmt.Println("2. stok barang")
+	fmt.Println("3. kembali")
 	fmt.Println("====================")
 	fmt.Print("pilih: ")
 	fmt.Scan(&pilihan)
@@ -988,17 +1135,17 @@ func tampilanDataBarang(T *arrBarang, X *arrTransaksi, N, N1 *int, x int) {
 		} else if x == 2 {
 			descending(&*T, &*X, *N, *N1, 1)
 		}
-
+		print(*T, *X, *N, *N1, 1)
 	} else if pilihan == 2 {
 		if x == 1 {
 			ascending(&*T, &*X, *N, *N1, 2)
 		} else if x == 2 {
 			descending(&*T, &*X, *N, *N1, 2)
 		}
-
+		print(*T, *X, *N, *N1, 1)
+	} else if pilihan == 3 {
+		tampilan(&*T, &*X, &*N, &*N1)
 	}
-
-	print(*T, *X, *N, *N1, 1)
 }
 
 func tampilanDataTransaksi(T *arrBarang, X *arrTransaksi, N, N1 *int, x int) {
@@ -1009,6 +1156,7 @@ func tampilanDataTransaksi(T *arrBarang, X *arrTransaksi, N, N1 *int, x int) {
 	fmt.Println("tampilan data transaksi:")
 	fmt.Println("1. waktu")
 	fmt.Println("2. nilai")
+	fmt.Println("3. kembali")
 	fmt.Println("====================")
 	fmt.Print("pilih: ")
 	fmt.Scan(&pilihan)
@@ -1020,17 +1168,17 @@ func tampilanDataTransaksi(T *arrBarang, X *arrTransaksi, N, N1 *int, x int) {
 		} else if x == 2 {
 			descending(&*T, &*X, *N, *N1, 3)
 		}
-
+		print(*T, *X, *N, *N1, 2)
 	} else if pilihan == 2 {
 		if x == 1 {
 			ascending(&*T, &*X, *N, *N1, 4)
 		} else if x == 2 {
 			descending(&*T, &*X, *N, *N1, 4)
 		}
-
+		print(*T, *X, *N, *N1, 2)
+	} else if pilihan == 3 {
+		tampilan(&*T, &*X, &*N, &*N1)
 	}
-
-	print(*T, *X, *N, *N1, 2)
 }
 
 func exit() int {
@@ -1053,7 +1201,6 @@ func main() {
 	var dataBarang arrBarang
 	var dataTransaksi arrTransaksi
 	var NBarang, NTransaksi int
-
 	inputDataBarang(&dataBarang, &NBarang)
 	inputDataTransaksi(&dataTransaksi, &NTransaksi)
 	menu(&dataBarang, &dataTransaksi, &NBarang, &NTransaksi)
